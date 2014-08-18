@@ -17,7 +17,6 @@ function less_compile($plugin)
 		$less_path = DOCROOT.$less_folder_path.DIRECTORY_SEPARATOR;
 		$css_path = DOCROOT.$css_folder_path.DIRECTORY_SEPARATOR;
 		
-		
 		if((!is_dir($less_path) AND !is_dir($css_path)) OR $plugin->get('enabled') == Config::NO)
 		{
 			return;
@@ -25,34 +24,28 @@ function less_compile($plugin)
 
 		$files = new DirectoryIterator($less_path);
 
-		$params = array();
-		if( $plugin->get('format_css', Config::NO) == Config::NO )
-		{
-			$params = array(
-				'newlineChar' => '',
-				'indentChar' => '',
-			);
-		}
-		
 		$less = new lessc;
 
 		foreach ($files as $file)
 		{
-			if ($file->isDot() OR $file->isDir() OR $file->getFilename() !== 'common.less') continue;
+			if ($file->isDot() OR $file->isDir() OR $file->getFilename() !== 'common.less')
+				continue;
 
-			$pathinfo = pathinfo($file->getFilename() );
+			$pathinfo = pathinfo($file->getFilename());
 
-			if($pathinfo['extension'] == 'less')
+			if ($pathinfo['extension'] == 'less')
 			{
-				$less_file = $less_path.$file->getFilename();
-				$css_file = $css_path.DIRECTORY_SEPARATOR.$pathinfo['filename'].'.css';
-				
-				$less->checkedCompile( $less_file, $css_file, $params);
+				$less_file = $less_path . $file->getFilename();
+				$css_file = $css_path . DIRECTORY_SEPARATOR . $pathinfo['filename'] . '.css';
+
+				$less->checkedCompile($less_file, $css_file);
 			}
 		}
 	}
 	catch (Exception $e ) 
 	{
+		echo $e->getMessage();
+		exit();
 		return;
 	}
 }
