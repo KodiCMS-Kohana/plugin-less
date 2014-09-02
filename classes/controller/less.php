@@ -8,26 +8,26 @@ class Controller_Less extends Controller_System_Plugin {
 
 		$less_folder_path = trim($this->plugin->get('less_folder_path', 'public/less'), '/');
 		$css_folder_path = trim($this->plugin->get('css_folder_path', 'public/css'), '/');
-		
-		$less_path = DOCROOT.$less_folder_path.DIRECTORY_SEPARATOR;
-		$css_path = DOCROOT.$css_folder_path.DIRECTORY_SEPARATOR;
-		
+
+		$less_path = DOCROOT . $less_folder_path . DIRECTORY_SEPARATOR;
+		$css_path = DOCROOT . $css_folder_path . DIRECTORY_SEPARATOR;
+
 		$this->template->content->content->set(array(
-			'less_folder_path' => $less_folder_path, 
+			'less_folder_path' => $less_folder_path,
 			'css_folder_path' => $css_folder_path,
-			'is_dir_less' => is_dir($less_path), 
+			'is_dir_less' => is_dir($less_path),
 			'is_dir_css' => is_dir($css_path)
 		));
 	}
-	
-	protected function _settings_save( $plugin )
+
+	protected function _settings_save($plugin)
 	{
-		if(!isset($_POST['setting']['enabled']))
+		if (!isset($_POST['setting']['enabled']))
 		{
 			$_POST['setting']['enabled'] = Config::NO;
 		}
 
-		if(!isset($_POST['setting']['format_css']))
+		if (!isset($_POST['setting']['format_css']))
 		{
 			$_POST['setting']['format_css'] = Config::NO;
 		}

@@ -1,23 +1,23 @@
 <?php defined( 'SYSPATH' ) or die( 'No direct script access.' );
 
-Kohana::load(PLUGPATH.'/less/vendors/lessc.inc.php');
+Kohana::load(PLUGPATH . '/less/vendors/lessc.inc.php');
 
-if( AuthUser::isLoggedIn() )
-{	
+if (Auth::is_logged_in())
+{
 	less_compile($plugin);
 }
 
-function less_compile($plugin) 
+function less_compile($plugin)
 {
 	try
 	{
-		$less_folder_path = trim( $plugin->get('less_folder_path'), '/');
-		$css_folder_path = trim( $plugin->get('css_folder_path'), '/');
-				
-		$less_path = DOCROOT.$less_folder_path.DIRECTORY_SEPARATOR;
-		$css_path = DOCROOT.$css_folder_path.DIRECTORY_SEPARATOR;
-		
-		if((!is_dir($less_path) AND !is_dir($css_path)) OR $plugin->get('enabled') == Config::NO)
+		$less_folder_path = trim($plugin->get('less_folder_path'), '/');
+		$css_folder_path = trim($plugin->get('css_folder_path'), '/');
+
+		$less_path = DOCROOT . $less_folder_path . DIRECTORY_SEPARATOR;
+		$css_path = DOCROOT . $css_folder_path . DIRECTORY_SEPARATOR;
+
+		if ((!is_dir($less_path) AND !is_dir($css_path)) OR $plugin->get('enabled') == Config::NO)
 		{
 			return;
 		}
@@ -41,8 +41,8 @@ function less_compile($plugin)
 				$less->checkedCompile($less_file, $css_file);
 			}
 		}
-	}
-	catch (Exception $e ) 
+	} 
+	catch (Exception $e)
 	{
 		echo $e->getMessage();
 		exit();
